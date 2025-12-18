@@ -5,7 +5,7 @@ from typing import Dict, Any, Tuple
 from groq import Groq
 
 # Fallback: deterministic stubs when key missing
-_GROQ_KEY = os.getenv("your_groq_api_key_here")
+_GROQ_KEY = os.getenv("GROQ_API_KEY", "")
 _client = Groq(api_key=_GROQ_KEY) if _GROQ_KEY else None
 
 def _chat(prompt: str) -> str:
