@@ -1,0 +1,1 @@
+from AUTO_COLD_MAIL_GEN.core.parsers import parse_resume_pdf

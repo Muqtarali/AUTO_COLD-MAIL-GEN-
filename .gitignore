@@ -1,0 +1,45 @@
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.venv/
+venv/
+env/
+.dist/
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+
+# Secrets (keep out of VCS)
+credentials.json
+token.json
+
+# Flutter/Dart (mailgen_frontend)
+mailgen_frontend/.dart_tool/
+mailgen_frontend/build/
+mailgen_frontend/.packages
+mailgen_frontend/.flutter-plugins
+mailgen_frontend/.flutter-plugins-dependencies
+mailgen_frontend/pubspec.lock
+
+# Node
+node_modules/
+
+# Data stores (likely large/sensitive)
+vectorstore/
+
+# Android/iOS build
+android/app/build/
+ios/Pods/
+ios/build/

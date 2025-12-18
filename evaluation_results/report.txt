@@ -1,0 +1,37 @@
+
+======================================================================
+📊 MODEL EVALUATION REPORT
+======================================================================
+
+🎯 MAIN METRICS:
+  • Precision:     0.8116  → Accuracy of positive predictions
+  • Recall:        0.8000  → Coverage of actual positives
+  • F1-Score:      0.8058  → Harmonic mean (balance)
+  • Specificity:   0.9000  → True negative rate
+  • Sensitivity:   0.8000  → True positive rate
+
+📈 CONFUSION MATRIX:
+  ┌─────────────────────────────────────┐
+  │ True Positives (TP):    56 ✅     │
+  │ True Negatives (TN):   117 ✅     │
+  │ False Positives (FP):   13 ❌     │
+  │ False Negatives (FN):   14 ❌     │
+  └─────────────────────────────────────┘
+  
+  Total: 200 samples
+
+📋 INTERPRETATION:
+
+  Precision (81.2%):
+    → Of all emails marked as relevant, 81.2% actually are
+    
+  Recall (80.0%):
+    → Of all actually relevant emails, 80.0% are found
+    
+  F1-Score (0.806):
+    → Overall model quality (0-1 scale)
+
+💡 MODEL ASSESSMENT:
+  ✅ EXCELLENT - Model performs very well
+
+======================================================================
