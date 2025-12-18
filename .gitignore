@@ -20,6 +20,8 @@ build/
 
 # Logs
 *.log
+.cache/
+.env
 
 # Secrets (keep out of VCS)
 credentials.json
