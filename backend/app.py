@@ -288,15 +288,23 @@ def generate_email(payload: Dict[str, Any]):
             jd_role,
             "",
         )
+        
+        # Ensure body is not empty
+        if not body:
+            logger.warning(f"Generated email body is empty for resume_id={resume_id}, jd_id={jd_id}")
+            body = "I am very interested in this opportunity. Please let me know if you'd like to discuss further."
+        
         return {"ok": True, "subject": subject, "body": body}
     except HTTPException:
         raise
     except Exception as e:
+        logger.exception(f"Error generating email for resume_id={resume_id}, jd_id={jd_id}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/send")
 def send_endpoint(payload: Dict[str, Any]):
+    logger.info(f"Raw payload: {payload}")
     logger.info(f"Received send request with payload keys: {payload.keys()}")
     to = payload.get("to")
     subject = payload.get("subject")
@@ -316,6 +324,8 @@ def send_endpoint(payload: Dict[str, Any]):
         logger.exception("Failed to log send payload details")
     
     logger.info(f"to: {bool(to)}, subject: {bool(subject)}, body: {bool(body)}")
+    logger.info(f"First 100 chars of subject: {(subject or '')[:100]}")
+    logger.info(f"First 100 chars of body: {(body or '')[:100]}")
     
     if not to or not subject or not body:
         detail = "Missing required fields: "
@@ -333,16 +343,17 @@ def send_endpoint(payload: Dict[str, Any]):
         from core.conversation_store import create_conversation
         from core.email_monitor import get_email_monitor
         from core.selenium_watcher import get_selenium_watcher
+        from core.config import SETTINGS
         import os
 
-        # Use credentials from .env if not provided
-        smtp_from = payload.get("from") or os.getenv("GMAIL_USER")
-        smtp_pass = payload.get("password") or os.getenv("GMAIL_PASSWORD")
+        # Use credentials from payload or .env or config
+        smtp_from = payload.get("from") or os.getenv("GMAIL_USER") or SETTINGS.smtp_from
+        smtp_pass = payload.get("password") or os.getenv("GMAIL_PASSWORD") or SETTINGS.smtp_app_password
         
         if not smtp_from or not smtp_pass:
             raise HTTPException(
                 status_code=400, 
-                detail="Gmail credentials not found. Please set GMAIL_USER and GMAIL_PASSWORD in .env file"
+                detail="Gmail credentials not found. Please set GMAIL_USER and GMAIL_PASSWORD in .env file or provide them in the request"
             )
         
         ok, err = send_email(smtp_from, smtp_pass, to, subject, body)
